@@ -1,0 +1,21 @@
+{
+  "name": "restauranting",
+  "version": "0.0.0",
+  "homepage": "https://github.com/annarankin/restaurant-manager",
+  "authors": [
+    "anna rankin <anna@annarankin.com>"
+  ],
+  "description": "'Application for managing menu items at various restaurants'",
+  "main": "./app.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4"
+  }
+}

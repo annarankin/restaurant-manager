@@ -10,3 +10,5 @@
 | PUT | '/restaurants/:id' | updates every property of the existing data object that matches ':id' |
 | PATCH | '/restaurants/:id' | updates a single property of the existing data object that matches ':id' |
 | DELETE | '/restaurants/:id' | deletes an existing data object in the database that matches ':id' |
+| GET | '/restaurants/:id/items' | returns an array of items where the 'postId' property matches the restaurant's 'id' property. |
+| PUT | '/restaurants/1/items' | adds an item to the specified restaurant (note - check if this auto-generates a 'postId' field) |

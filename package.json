@@ -1,0 +1,22 @@
+{
+  "name": "restauranting",
+  "version": "1.0.0",
+  "description": "'restaurant menu item manager for multiple locations'",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/annarankin/restaurant-manager.git"
+  },
+  "author": "anna rankin <anna@annarankin.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/annarankin/restaurant-manager/issues"
+  },
+  "homepage": "https://github.com/annarankin/restaurant-manager",
+  "dependencies": {
+    "json-server": "^0.7.2"
+  }
+}

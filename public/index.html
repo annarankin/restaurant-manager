@@ -37,7 +37,7 @@
   <!-- TEMPLATES -->
   <script type="text/template" data-id="restaurant-template">
 
-    <div class="twelve columns restaurant">
+    <div class="twelve columns restaurant" data-id="{{id}}">
       <div class="restaurant header">
         <div class="row">
           <div class="nine columns">
@@ -53,8 +53,8 @@
         </div>
       </div>
       <div class="restaurant buttons">
-        <button onclick=location.href="#/restaurants/{{id}}" class="submit">Edit Restaurant Details</button>
-        <button onclick=location.href="#/restaurants/{{id}}/items" class="submit">View Menu</button>
+        <button data-action="expand-restaurant-info" class="submit">Edit Restaurant Details</button>
+        <button data-action="expand-restaurant-menu" class="submit">View Menu</button>
       </div>
     </div>
 

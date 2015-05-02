@@ -12,6 +12,7 @@ $addBar = $('#add-bar')
 //event listeners
 
 $addBar.on('click', '[data-action="new-restaurant"]', addNewRestaurant)
+$content.on('click', 'button[data-action="expand-restaurant-info"]', expandRestaurantInfo)
 
 
 //Router functions
@@ -62,11 +63,14 @@ function postToServer(url, data) {
 //rendering functions
 function renderRestaurant(data) {
   $content.html("")
-  var $restaurantArray = _.map(data, function(element, index, list) {
-    return Mustache.render(restaurantTemplate, element);
-    debugger
+  var sortedData = _.sortBy(data, function(obj) {
+    return -obj.id;
   })
-  $content.append($restaurantArray)
+  var restaurantArray = _.map(sortedData, function(element, index, list) {
+    return Mustache.render(restaurantTemplate, element);
+    // debugger
+  })
+  $content.append(restaurantArray)
 };
 
 
@@ -76,8 +80,14 @@ function expandAddNewMenu() {
 }
 
 function collapseAddNewMenu() {
-    $addBar.html("")
-    $addBar.append(addBarDefault)
-  }
-  //INVOCATIONS
-  // getFromServer('/restaurants')
+  $addBar.html("")
+  $addBar.append(addBarDefault)
+}
+
+function expandRestaurantInfo(event) {
+  var restaurantName = $(this).parents('.twelve.columns.restaurant').find('h2').text()
+  debugger
+}
+
+//INVOCATIONS
+home()

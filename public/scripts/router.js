@@ -9,9 +9,7 @@ var routes = {
       on: expandAddNewMenu
     },
     "/:id": {
-      on: function(id) {
-        console.log(id)
-      }
+      on: expandRestaurantInfo
     },
     "/:id/items": {
       on: function(id) {

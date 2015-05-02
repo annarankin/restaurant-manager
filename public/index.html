@@ -4,16 +4,29 @@
   <meta charset="UTF-8">
   <title>Hello</title>
   <link rel="icon" type="image/png" href="favicon.ico">
+
+  <!-- Script links -->
   <script src="./bower_components/director/build/director.js"></script>
   <script src="./bower_components/jquery/dist/jquery.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.js"></script>
+
+  <!-- Stylesheet links -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"> 
+  <link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
 
-  <header>Welcome!</header>
-  <div class="content">
+  <header><h1>Welcome!</h1></header>
+  <div id="add-bar"> </div>
+  <div class="container content">
+    <div class="row">
 
 
-
+    </div>
 
   </div> 
 
@@ -21,6 +34,74 @@
 
 
 
+  <!-- TEMPLATES -->
+  <script type="text/template" data-id="restaurant-template">
+
+    <div class="twelve columns restaurant">
+      <div class="restaurant header">
+        <div class="row">
+          <div class="nine columns">
+            <h2>{{name}}</h2>
+            <ul>
+              <li>Location: {{location}}</li>
+              <li>Type of Cuisine: {{cuisine}}</li>
+            </ul>
+          </div>
+          <div class="three columns">
+            <img src="{{image_url}}">
+          </div>
+        </div>
+      </div>
+      <div class="restaurant buttons">
+        <button onclick=location.href="#/restaurants/{{id}}" class="submit">Edit Restaurant Details</button>
+        <button onclick=location.href="#/restaurants/{{id}}/items" class="submit">View Menu</button>
+      </div>
+    </div>
+
+  </script>
+
+  <script type="text/template" data-id="add-bar-template">
+  <a href="#/"><h2>Never Mind</h2></a>
+    <form>
+    <div class="container">
+      
+      <div class="row">
+        <div class="twelve columns">
+          <label for="restaurant-name">Restaurant Name:</label>
+          <input class="u-full-width" type="text" placeholder="Wooby Woosdayze" id="restaurant-name">
+        </div>
+      </div>
+      
+      <div class="row">
+
+        <div class="six columns">
+          <label for="restaurant-cuisine">Cuisine</label>
+          <input class="u-full-width" type="text" placeholder="Cow Chow" id="restaurant-cuisine">
+        </div>
+        <div class="six columns">
+          <label for="restaurant-location">Location</label>
+          <input class="u-full-width" type="text" placeholder="The moon" id="restaurant-location">
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="twelve columns">
+        <label for="restaurant-image">Image URL:</label>
+          <input class="u-full-width" type="text" placeholder="http://..." id="restaurant-image">
+          <p>Need to upload an image? Try <a href="http://imgur.com" target="_blank">imgur</a>
+        </div>
+      </div>
+      <input class="button-primary" data-action="new-restaurant" type="submit" value="Submit">
+    </form>
+    </div>
+
+  </script>
+
+  <!-- End of templates -->
+
+  <!-- Loading router & main -->
   <script src="./scripts/main.js"></script>
+  <script src="./scripts/router.js"></script>  
 </body>
 </html>

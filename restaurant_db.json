@@ -6,6 +6,20 @@
       "location": "Chicago",
       "cuisine": "American",
       "image_url": "http://www.coupons4utah.com/wp-content/uploads/2012/06/dennys-breakfast.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Annie's",
+      "location": "NYC",
+      "cuisine": "Nope",
+      "image_url": "http://www.coupons4utah.com/wp-content/uploads/2012/06/dennys-breakfast.jpg"
+    },
+    {
+      "name": "asdasd",
+      "location": "asdads",
+      "cuisine": "asdasd",
+      "image_url": "http://www.shopgearbox.com/media/catalog/product/cache/1/thumbnail/9df78eab33525d08d6e5fb8d27136e95/m/e/mens-tee-gb-stallion-detail.jpg",
+      "id": 3
     }
   ],
   "items": [

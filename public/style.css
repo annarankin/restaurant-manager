@@ -1,0 +1,56 @@
+header {
+  background: #ee4433;
+  width: 100%;
+  height: 200px;
+  text-align: center;
+}
+
+#add-bar {
+  width: 100%;
+  background: #ededed;
+  text-align: center;
+}
+
+.restaurant {
+  background: #999;
+  border-radius: 10px 10px 0 0;
+  padding: 0px;
+  margin: 20px;
+  border: 1px solid #999;
+}
+
+.restaurant .header {
+  background: #ededed;
+  height: 150px;
+  margin: 0px;
+
+}
+
+.restaurant .header h2 {
+  padding: 20px;
+}
+
+.restaurant ul li {
+  display: inline;
+  list-style: none;
+  margin: 3px 15px;
+}
+
+.restaurant img {
+  overflow: hidden;
+  width: 145px;
+  height: 145px;
+  border-radius: 50%;
+  margin: 2px;
+}
+
+.restaurant .buttons {
+  padding: 10px;
+  text-align: center;
+    margin: 0px;
+
+}
+
+.submit {
+  background: LightGreen;
+}

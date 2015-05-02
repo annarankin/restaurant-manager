@@ -1,0 +1,30 @@
+//setting up router options
+
+
+//setting up routes.
+var routes = {
+  '/' : home,
+  "/restaurants/": {
+    '/new': {
+      on: expandAddNewMenu
+    },
+    "/:id": {
+      on: function(id) {
+        console.log(id)
+      }
+    },
+    "/:id/items": {
+      on: function(id) {
+        console.log(id + "/items")
+      }
+    }
+  }
+}
+
+//ROUTES TAKE 2
+
+
+
+var router = Router(routes)
+
+router.init()

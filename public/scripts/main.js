@@ -19,11 +19,10 @@ $content.on('click', 'button[data-action="expand-restaurant-info"]', expandResta
 $content.on('click', 'input[data-action="update-restaurant"]', updateRestaurant)
 $content.on('click', 'input[data-action="delete-restaurant"]', deleteRestaurant)
 $content.on('click', '[data-action="expand-restaurant-menu"]', expandMenu)
-$content.on('click', '[data-action="new-item"]', function(event) {
-  event.preventDefault();
-  // debugger;
-  console.log(event)
-})
+$content.on('click', '[data-action="new-item"]', submitNewItem)
+$content.on('click', '[data-id="remove-item"]', removeItem)
+
+$content.on('blur', '.menu-item', updateItem)
 
 
 
@@ -181,17 +180,59 @@ function expandRestaurantInfo(event) {
 }
 
 function expandMenu(event) {
-    event.preventDefault();
-    var id = $(this).parents(".twelve.columns.restaurant").attr('data-id')
-    var $infoSection = $(this).parents(".twelve.columns.restaurant").find('.info')
-      // debugger
-    getFromServer('/restaurants/' + id + '/items', function(data) {
-      console.log(data)
-        //render menu
-        //append to '.restaurant.info'
-      $infoSection.html("")
-      $infoSection.append(Mustache.render(menuTemplate, {items: data}))
-    })
+  event.preventDefault();
+
+  //NOTE - 'this' referred to the context of the window. BLAH
+  var restaurantId = $(event.target).parents(".twelve.columns.restaurant").attr('data-id');
+  var $infoSection = $(event.target).parents(".twelve.columns.restaurant").find('.info');
+  // debugger
+  console.log(restaurantId);
+  var requestURI = '/restaurants/' + restaurantId + '/items'
+  // debugger
+
+  getFromServer(requestURI, function(data) {
+    console.log(data)
+    // debugger
+    $infoSection.html("")
+    $infoSection.append(Mustache.render(menuTemplate, {
+      items: data
+    }))
+  })
+}
+
+function submitNewItem(event) {
+  event.preventDefault();
+  var itemName = $(this).parents('.row').find('[name="item-name"]').val()
+  var itemPrice = $(this).parents('.row').find('[name="item-price"]').val()
+  var itemImageURL = $(this).parents('.row').find('[name="item-image"]').val()
+  var restaurantId = $(this).parents(".twelve.columns.restaurant").attr('data-id')
+  // debugger
+
+  var dataObject = {
+    restaurantId: restaurantId,
+    name: itemName,
+    price: itemPrice,
+    order_count: 0,
+    image_url: itemImageURL
   }
-  //INVOKE THE POWERS
+
+  postToServer('/items', dataObject)
+  expandMenu(event);
+}
+
+function removeItem(event) {
+  var itemId = $(this).parents('.menu-item').attr('data-id');
+  deleteFromServer('/items/' +itemId)
+  expandMenu(event);
+  // debugger
+}
+
+function updateItem(event){
+  debugger
+  var newValue = event.target.textContent
+
+
+}
+
+//INVOKE THE POWERS
 home()

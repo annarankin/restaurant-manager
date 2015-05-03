@@ -107,13 +107,14 @@
       </script>
 
       <script type="text/template" data-id="menu-template">
+
         <div class="container menu">     
           <div class="row">
             <div class="seven columns right-border items">
               <h4>Menu goes here!</h4>
               <ol>
                 {{#items}}
-                <li><span contentEditable="true">{{name}}</span>, $<span contentEditable="true">{{price}}</span></p><p><span contentEditable="true">{{order_count}}</span> sold!</p><p>Profitability: X</p><button class="cancel">x</button><img src="{{image_url}}"></li><hr>
+                <li class="menu-item" data-id="{{id}}"><span data-id="item-name" contentEditable="true">{{name}}</span>, $<span data-id="item-price" contentEditable="true">{{price}}</span></p><p><span data-id="item-order-count" contentEditable="true">{{order_count}}</span> sold!</p><p>Profitability: X</p><button class="cancel" data-id="remove-item">x</button><img src="{{image_url}}"></li><hr>
                 {{/items}}
               </ol>
             </div>  
@@ -137,6 +138,7 @@
                 <div class="twelve columns">Hello this is the bottom</div>
               </div>
         </div>
+
       </script>
 
 

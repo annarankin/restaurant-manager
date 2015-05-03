@@ -28,8 +28,10 @@
 
 
     </div>
-
-  </div> 
+  </div>
+  <footer>
+    <p>About the Developer</p>
+  </footer> 
 
 
 
@@ -114,7 +116,7 @@
               <h4>Menu goes here!</h4>
               <ol>
                 {{#items}}
-                <li class="menu-item" data-id="{{id}}"><span data-id="item-name" contentEditable="true">{{name}}</span>, $<span data-id="item-price" contentEditable="true">{{price}}</span></p><p><span data-id="item-order-count" contentEditable="true">{{order_count}}</span> sold!</p><p>Profitability: X</p><button class="cancel" data-id="remove-item">x</button><img src="{{image_url}}"></li><hr>
+                <li class="menu-item" data-id="{{id}}"><span data-id="name" contentEditable="true">{{name}}</span>, $<span data-id="price" contentEditable="true">{{price}}</span></p><p><span data-id="order_count" contentEditable="true">{{order_count}}</span> sold!</p><p>Profitability: X</p><button class="cancel" data-id="remove-item">x</button><img src="{{image_url}}"></li><hr>
                 {{/items}}
               </ol>
             </div>  
@@ -123,9 +125,9 @@
                 <div class="row">
                   <div class="twelve columns">  
                     <h4>Add new item</h4>
-                    <input class="u-full-width" type="text" placeholder="Item Name" name="item-name">
-                    <input class="u-full-width" type="text" placeholder="Price" name="item-price">
-                    <input class="u-full-width" type="text" placeholder="Image URL" name="item-image">
+                    <input class="u-full-width" type="text" placeholder="Item Name" name="name">
+                    <input class="u-full-width" type="number" placeholder="Price" name="price">
+                    <input class="u-full-width" type="text" placeholder="Image URL" name="image_url">
                     <input class="button-primary u-full-width" type="submit" data-action="new-item" value="Submit">
 
                   </div>

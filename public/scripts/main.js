@@ -112,6 +112,15 @@ function updateServer(url, data) {
   })
 }
 
+function patchServer(url, data) {
+  $.ajax({
+    url: url,
+    data: data,
+    type: "PATCH",
+    success: console.log(data)
+  })
+}
+
 function deleteFromServer(url) {
   $.ajax({
     url: url,
@@ -182,17 +191,16 @@ function expandRestaurantInfo(event) {
 function expandMenu(event) {
   event.preventDefault();
 
-  //NOTE - 'this' referred to the context of the window. BLAH
+  //NOTE - 'this' referred to the context of the window. Probably because of chaining BLAH
   var restaurantId = $(event.target).parents(".twelve.columns.restaurant").attr('data-id');
   var $infoSection = $(event.target).parents(".twelve.columns.restaurant").find('.info');
   // debugger
-  console.log(restaurantId);
   var requestURI = '/restaurants/' + restaurantId + '/items'
-  // debugger
+    // debugger
 
   getFromServer(requestURI, function(data) {
     console.log(data)
-    // debugger
+      // debugger
     $infoSection.html("")
     $infoSection.append(Mustache.render(menuTemplate, {
       items: data
@@ -202,11 +210,11 @@ function expandMenu(event) {
 
 function submitNewItem(event) {
   event.preventDefault();
-  var itemName = $(this).parents('.row').find('[name="item-name"]').val()
-  var itemPrice = $(this).parents('.row').find('[name="item-price"]').val()
-  var itemImageURL = $(this).parents('.row').find('[name="item-image"]').val()
+  var itemName = $(this).parents('.row').find('[name="name"]').val()
+  var itemPrice = $(this).parents('.row').find('[name="price"]').val()
+  var itemImageURL = $(this).parents('.row').find('[name="image_url"]').val()
   var restaurantId = $(this).parents(".twelve.columns.restaurant").attr('data-id')
-  // debugger
+  debugger
 
   var dataObject = {
     restaurantId: restaurantId,
@@ -222,16 +230,19 @@ function submitNewItem(event) {
 
 function removeItem(event) {
   var itemId = $(this).parents('.menu-item').attr('data-id');
-  deleteFromServer('/items/' +itemId)
+  deleteFromServer('/items/' + itemId)
   expandMenu(event);
   // debugger
 }
 
-function updateItem(event){
-  debugger
-  var newValue = event.target.textContent
-
-
+function updateItem(event) {
+  var newValue = $(event.target).text()
+  var itemId = $(event.target).parents('.menu-item').attr('data-id')
+  var itemProperty = $(event.target).attr('data-id')
+  // debugger
+  var dataObject = JSON.parse('{"' + itemProperty + '" : "' + newValue + '"}')
+  // console.log(dataObject)
+  updateServer('/items/' + itemId, dataObject)
 }
 
 //INVOKE THE POWERS

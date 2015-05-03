@@ -25,17 +25,9 @@
       "image_url": "http://kleberly.com/data_images/wallpapers/7/277047-hamburger.jpg"
     },
     {
-      "id": 2,
-      "restaurantId": 5,
-      "name": "woof",
-      "price": 10,
-      "order_count": 0,
-      "image_url": "http://kleberly.com/data_images/wallpapers/7/277047-hamburger.jpg"
-    },
-    {
       "id": 3,
       "restaurantId": 5,
-      "name": "Something",
+      "name": "Boiger",
       "price": 10,
       "order_count": 4,
       "image_url": "http://kleberly.com/data_images/wallpapers/7/277047-hamburger.jpg"
@@ -43,66 +35,18 @@
     {
       "restaurantId": 5,
       "name": "Banana",
-      "price": 90,
-      "order_count": 0,
+      "price": 1,
+      "order_count": 10,
       "image_url": "https://greensfirst.files.wordpress.com/2011/02/bananas-7671231small.jpg",
       "id": 4
     },
     {
       "restaurantId": 5,
-      "name": "SALAD",
-      "price": 97000,
-      "order_count": 0,
+      "name": "Special Salad",
+      "price": 19,
+      "order_count": 2,
       "image_url": "http://www.plusonepizza.com/Athens/images/123v.jpg",
       "id": 5
-    },
-    {
-      "restaurantId": 4,
-      "name": "THINGS",
-      "price": "STUFF",
-      "order_count": 0,
-      "image_url": "WOW",
-      "id": 7
-    },
-    {
-      "restaurantId": 4,
-      "name": "",
-      "price": "",
-      "order_count": 0,
-      "image_url": "",
-      "id": 8
-    },
-    {
-      "restaurantId": 4,
-      "name": "BLAH BLAH",
-      "price": "WOWWW",
-      "order_count": 0,
-      "image_url": 8989,
-      "id": 9
-    },
-    {
-      "restaurantId": 4,
-      "name": "sdiugflas",
-      "price": "lsjlsa",
-      "order_count": 0,
-      "image_url": "luafba",
-      "id": 10
-    },
-    {
-      "restaurantId": 4,
-      "name": "ldisflaisf",
-      "price": "laflaksdf",
-      "order_count": 0,
-      "image_url": "lkasdjflaskf",
-      "id": 11
-    },
-    {
-      "restaurantId": 4,
-      "name": "hello",
-      "price": "hi",
-      "order_count": 0,
-      "image_url": "wow",
-      "id": 12
     },
     {
       "restaurantId": 5,
@@ -111,6 +55,14 @@
       "order_count": 0,
       "image_url": "https://avatars0.githubusercontent.com/u/9851544?v=3&s=460",
       "id": 14
+    },
+    {
+      "restaurantId": 5,
+      "name": "Bison",
+      "price": 50,
+      "order_count": 0,
+      "image_url": "no",
+      "id": 15
     }
   ]
 }

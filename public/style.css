@@ -119,9 +119,10 @@ a {
   position: relative;
   float:left;
   right: 27px;
-  top: -73px;
+  top: -70px;
   display: inline;
   line-height: 0px;
+  border-radius: 50%;
 }
 .items img {
   float: right;
@@ -130,4 +131,13 @@ a {
   position: relative;
   top: -73px;
   right: 20px;
+}
+
+footer {
+  color: #fff;
+  background: #000;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
 }

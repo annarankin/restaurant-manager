@@ -2,12 +2,19 @@
 
 ##Features
 
-1.  Lucille wants to be able to create, read, update, and delete restaurants.
+1. Lucille wants to be able to create, read, update, and delete restaurants.
 Lucile wants to be able to create, read, update, and delete items.
 Lucille wants to be able to organize items by their restaurant (so an item should only belong to one menu).
 Lucille wants her app to "shine" visually.
 Lucille definitely wants the app to only have on view. No reloads!
 Finally, she wants a button to an About 'page' that has some information about you, since you are developing the application.
+Use the nutritionix API to expand the functionality of your app.
+Make nutrition information viewable for each item.
+Each item tracks price and the number of units sold. Build behavior that shows how profitable each item is.
+Use Underscore.js for complex iteration and enumeration.
+Use Draggabilly to drag and drop items into different restaurants. This should also update the database so they are now apart of the restaurant they have been dragged to.
+Use Chart.js to show a graph of your top 10 items and their sales numbers.
+Make the application responsive so that it is viewable on a mobile phone.
 
 ##Construction
 

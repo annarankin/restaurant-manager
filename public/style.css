@@ -22,6 +22,9 @@ a {
   text-decoration: none;
   color : #1FCEFF;
 }
+.content {
+  margin-bottom: 170px;
+}
 
 #add-bar {
   width: 100%;
@@ -67,10 +70,11 @@ a {
 
 .restaurant img {
   overflow: hidden;
-  width: 100px;
-  height: 100px;
+  width: 92px;
+  height: 92px;
   border-radius: 50%;
-  margin: 2px;
+  margin: 4px;
+  background: #FFEF87;
 }
 
 .restaurant .buttons {
@@ -140,4 +144,33 @@ footer {
   bottom: 0;
   width: 100%;
   text-align: center;
+}
+.other-items {
+  margin-top: 20px;
+}
+
+.other-item {
+  background: #ededed;
+  border-radius: 5px;
+  line-height: 90%;
+  text-align: center;
+  overflow: auto;
+}
+.other-item h5 {
+  font-family: 'Fontdiner Swanky', cursive;
+  font-size: 10px;
+  padding:7px 7px;
+  margin: 0;
+}
+
+.other-item p {
+  font-size: 10px;
+  margin: 0px;
+}
+.other-item img {
+  width: 50px;
+  height: 50px;
+  clear: both;
+  position: static;
+  overflow:auto;
 }

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Hello</title>
+  <title>Restaurant Manager</title>
   <link rel="icon" type="image/png" href="favicon.ico">
 
   <!-- Script links -->
@@ -15,12 +15,13 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"> 
   <link rel="stylesheet" href="style.css">
+  <link href='http://fonts.googleapis.com/css?family=Fontdiner+Swanky' rel='stylesheet' type='text/css'>
 
 </head>
 
 <body>
 
-  <header><h1>Welcome!</h1></header>
+  <header><h1>Restaurant Manager</h1></header>
   <div id="add-bar"> </div>
   <div class="container content">
     <div class="row">
@@ -41,67 +42,108 @@
       <div class="restaurant header">
         <div class="row">
           <div class="nine columns">
-            <h2>{{name}}</h2>
+            <h2 data-id="name">{{name}}</h2>
             <ul>
-              <li>Location: {{location}}</li>
-              <li>Type of Cuisine: {{cuisine}}</li>
+              <li>Location: <span data-id="location">{{location}}</span></li>
+              <li>Type of Cuisine: <span data-id="cuisine">{{cuisine}}</span></li>
             </ul>
           </div>
           <div class="three columns">
-            <img src="{{image_url}}">
+            <img data-id="image" src="{{image_url}}">
           </div>
         </div>
       </div>
+      <div class="restaurant info">
+      </div>
       <div class="restaurant buttons">
-        <button data-action="expand-restaurant-info" class="submit">Edit Restaurant Details</button>
-        <button data-action="expand-restaurant-menu" class="submit">View Menu</button>
+        <div class="row">
+          <div class="six columns">
+            <button data-action="expand-restaurant-info" class="u-full-width submit">Edit Restaurant Details</button>
+          </div>
+          <div class="six columns">
+            <button data-action="expand-restaurant-menu" class="u-full-width submit">View Menu</button>
+          </div>
+        </div>
       </div>
     </div>
 
   </script>
 
   <script type="text/template" data-id="add-bar-template">
-  <a href="#/"><h2>Never Mind</h2></a>
-    <form>
-    <div class="container">
-      
-      <div class="row">
-        <div class="twelve columns">
-          <label for="restaurant-name">Restaurant Name:</label>
-          <input class="u-full-width" type="text" placeholder="Wooby Woosdayze" id="restaurant-name">
-        </div>
-      </div>
-      
-      <div class="row">
+    <form data-id="{{id}}">
+      <div class="container">
 
-        <div class="six columns">
-          <label for="restaurant-cuisine">Cuisine</label>
-          <input class="u-full-width" type="text" placeholder="Cow Chow" id="restaurant-cuisine">
-        </div>
-        <div class="six columns">
-          <label for="restaurant-location">Location</label>
-          <input class="u-full-width" type="text" placeholder="The moon" id="restaurant-location">
+        <div class="row">
+          <div class="twelve columns">
+            <label for="restaurant-name">Restaurant Name:</label>
+            <input class="u-full-width" type="text" placeholder="Restaurant Name" id="restaurant-name" value="{{name}}">
+          </div>
         </div>
 
-      </div>
+        <div class="row">
 
-      <div class="row">
-        <div class="twelve columns">
-        <label for="restaurant-image">Image URL:</label>
-          <input class="u-full-width" type="text" placeholder="http://..." id="restaurant-image">
-          <p>Need to upload an image? Try <a href="http://imgur.com" target="_blank">imgur</a>
+          <div class="six columns">
+            <label for="restaurant-cuisine">Cuisine</label>
+            <input class="u-full-width" type="text" placeholder="What kinda chow?" id="restaurant-cuisine" value="{{cuisine}}">
+          </div>
+          <div class="six columns">
+            <label for="restaurant-location">Location</label>
+            <input class="u-full-width" type="text" placeholder="Where at?" id="restaurant-location" value="{{location}}">
+          </div>
+
         </div>
-      </div>
-      <input class="button-primary" data-action="new-restaurant" type="submit" value="Submit">
-    </form>
-    </div>
 
-  </script>
+        <div class="row">
+          <div class="twelve columns">
+            <label for="restaurant-image">Image URL:</label>
+            <input class="u-full-width" type="text" placeholder="http://..." id="restaurant-image" value="{{image_url}}">
+            <p>Need to upload an image? Try <a href="http://imgur.com" target="_blank">imgur</a>
+            </div>
+          </div>
+          <input class="button-primary" data-action="{{action}}" type="submit" value="Submit">
+          <input class="button cancel" onclick='home();' type="submit" value="Cancel">
+        </form>
 
-  <!-- End of templates -->
+      </script>
 
-  <!-- Loading router & main -->
-  <script src="./scripts/main.js"></script>
-  <script src="./scripts/router.js"></script>  
-</body>
-</html>
+      <script type="text/template" data-id="menu-template">
+        <div class="container menu">     
+          <div class="row">
+            <div class="seven columns right-border items">
+              <h4>Menu goes here!</h4>
+              <ol>
+                {{#items}}
+                <li><span contentEditable="true">{{name}}</span>, $<span contentEditable="true">{{price}}</span></p><p><span contentEditable="true">{{order_count}}</span> sold!</p><p>Profitability: X</p><button class="cancel">x</button><img src="{{image_url}}"></li><hr>
+                {{/items}}
+              </ol>
+            </div>  
+            <div class="five columns">
+              <form>
+                <div class="row">
+                  <div class="twelve columns">  
+                    <h4>Add new item</h4>
+                    <input class="u-full-width" type="text" placeholder="Item Name" name="item-name">
+                    <input class="u-full-width" type="text" placeholder="Price" name="item-price">
+                    <input class="u-full-width" type="text" placeholder="Image URL" name="item-image">
+                    <input class="button-primary u-full-width" type="submit" data-action="new-item" value="Submit">
+
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="row">
+                    <h4>All the other items</h4>
+                <div class="twelve columns">Hello this is the bottom</div>
+              </div>
+        </div>
+      </script>
+
+
+      <!-- End of templates -->
+
+      <!-- Loading router & main -->
+      <script src="./scripts/main.js"></script>
+      <script src="./scripts/router.js"></script>  
+    </body>
+    </html>

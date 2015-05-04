@@ -3,3 +3,4 @@ bower_components
 .DS_Store
 ignore_this
 restaurant_db.json
+apiStuff.js

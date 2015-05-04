@@ -24,7 +24,10 @@ $content.on('click', 'button[data-action="expand-restaurant-info"]', expandResta
 $content.on('click', 'input[data-action="update-restaurant"]', updateRestaurant)
 $content.on('click', 'input[data-action="delete-restaurant"]', deleteRestaurant)
 $content.on('click', '[data-action="expand-restaurant-menu"]', viewMenu)
-  // $content.on('click', '[data-action="collapse-restaurant-menu"]', collapseMenu)
+$content.on('click', '[data-action="collapse-restaurant-menu"]', function(event) {
+  var restaurantId = $(event.target).attr('data-id')
+  collapseMenu(restaurantId)
+})
 $content.on('click', '[data-action="new-item"]', submitNewItem)
 $content.on('click', '[data-action="remove-item"]', removeItem)
 
@@ -217,17 +220,10 @@ function viewMenu(event) {
 
 function expandMenu(restaurantId, event) {
   console.log('restaurant ID: ' + restaurantId)
-// debugger
+    // debugger
   var $viewBtn = $('button[data-id="' + restaurantId + '"]')
   $viewBtn.attr('data-action', 'collapse-restaurant-menu')
   $viewBtn.text("Close Menu");
-  $viewBtn.on('click', function() {
-    collapseMenu(restaurantId);
-    $viewBtn.off('click')
-    // $viewBtn.attr('data-action', 'expand-restaurant-menu')
-    $viewBtn.text("View Menu");
-    $viewBtn.on('click', function(){expandMenu(restaurantId, event)})
-  })
   getFromServer('/restaurants/' + restaurantId + '/items', function(restaurantItemData) {
     getFromServer('/items', function(allItemData) {
       var $infoSection = $('.twelve.columns.restaurant[data-id ="' + restaurantId + '"]').find('.info');
@@ -254,7 +250,7 @@ function expandMenu(restaurantId, event) {
           var query = $(el).parents('.menu-item').find('[data-id ="name"]').text().replace(/ /g, "%20")
             // debugger
           $.ajax({
-            url: "https://api.nutritionix.com/v1_1/search/" + query + "?fields=item_name%2Citem_id%2Cbrand_name%2Cnf_calories%2Cnf_total_fat&appId="+appId+"&appKey="+ apikey,
+            url: "https://api.nutritionix.com/v1_1/search/" + query + "?fields=item_name%2Citem_id%2Cbrand_name%2Cnf_calories%2Cnf_total_fat&appId=" + appId + "&appKey=" + apikey,
             type: "GET",
             success: function(data) {
               console.log(data.hits[0].fields.item_name + ":\n" + data.hits[0].fields.nf_calories + " calories per " + data.hits[0].fields.nf_serving_size_unit)
@@ -282,13 +278,12 @@ function expandMenu(restaurantId, event) {
   });
 }
 
-// function createNutritionHover(data) {
-//   console.log(data.hits[0].fields.item_name + ":\n" + data.hits[0].fields.nf_calories + " calories per " + data.hits[0].fields.nf_serving_size_unit)
-//   var $hoverDiv = $('<div class="hover"><p>' + data.hits[0].fields.item_name + ":" + data.hits[0].fields.nf_calories + " calories per " + data.hits[0].fields.nf_serving_size_unit + '</p></div>')
-//   $('body').append($hoverDiv)
-// }
-
 function collapseMenu(restaurantId) {
+
+  var $viewBtn = $('button[data-id="' + restaurantId + '"]')
+  $viewBtn.attr('data-action', 'expand-restaurant-menu')
+  $viewBtn.text("View Menu");
+
   //empties the div of the restaurant that matches ID
   $('.restaurant[data-id="' + restaurantId + '"]').find('.info').html("")
 }

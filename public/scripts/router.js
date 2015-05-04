@@ -16,7 +16,8 @@ var routes = {
         console.log(id + "/items")
       }
     }
-  }
+  },
+  '/about' : showAbout
 }
 
 //ROUTES TAKE 2

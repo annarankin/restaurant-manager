@@ -10,12 +10,15 @@
   <script src="./bower_components/jquery/dist/jquery.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/draggabilly/1.2.3/draggabilly.pkgd.js"></script>
+  <script src="./scripts/droppabilly.js"></script>
 
   <!-- Stylesheet links -->
+  <link href='http://fonts.googleapis.com/css?family=Fontdiner+Swanky' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"> 
+  <link rel="stylesheet" href="animate.css">
   <link rel="stylesheet" href="style.css">
-  <link href='http://fonts.googleapis.com/css?family=Fontdiner+Swanky' rel='stylesheet' type='text/css'>
 
 </head>
 
@@ -30,7 +33,7 @@
     </div>
   </div>
   <footer>
-    <p>About the Developer</p>
+    <a href="#/about">About the Developer</a>
   </footer> 
 
 
@@ -38,20 +41,35 @@
 
 
   <!-- TEMPLATES -->
+
+  <script type="text/template" data-id="about-template">
+    <div class="dimmer" onclick=location.href="#/"></div>
+    <div class="about animated bounceIn">
+      <h1>About the Developer</h1>
+      <img src="http://www.gentlegiantsrescue-shelties.com/Images2/sheltie%201%20800.jpg">
+      <p>Anna Rankin is a person who lives in a place! Yeeaah.</p>
+      <a href="#/">Close</a>
+    </div>
+  </script>
+
+
+
   <script type="text/template" data-id="restaurant-template">
 
     <div class="twelve columns restaurant" data-id="{{id}}">
       <div class="restaurant header">
         <div class="row">
-          <div class="nine columns">
+          <div class="eight columns">
             <h2 data-id="name">{{name}}</h2>
             <ul>
               <li>Location: <span data-id="location">{{location}}</span></li>
               <li>Type of Cuisine: <span data-id="cuisine">{{cuisine}}</span></li>
             </ul>
           </div>
-          <div class="three columns">
-            <img data-id="image" src="{{image_url}}">
+          <div class="four columns">
+            <div class="image">
+              <img data-id="image" src="{{image_url}}">
+            </div>
           </div>
         </div>
       </div>
@@ -63,7 +81,7 @@
             <button data-action="expand-restaurant-info" class="u-full-width submit">Edit Restaurant Details</button>
           </div>
           <div class="six columns">
-            <button data-action="expand-restaurant-menu" class="u-full-width submit">View Menu</button>
+            <button data-id="{{id}}" data-action="expand-restaurant-menu" class="u-full-width submit">View Menu</button>
           </div>
         </div>
       </div>
@@ -112,11 +130,12 @@
 
         <div class="container menu">     
           <div class="row">
-            <div class="seven columns right-border items">
-              <h4>Menu goes here!</h4>
+            <div class="seven columns right-border items" data-id="{{id}}" id="droppable">
+              <h4>Menu</h4>
               <ol>
                 {{#items}}
-                <li class="menu-item" data-id="{{id}}"><span data-id="name" contentEditable="true">{{name}}</span>, $<span data-id="price" contentEditable="true">{{price}}</span></p><p><span data-id="order_count" contentEditable="true">{{order_count}}</span> sold!</p><p>Profitability: X</p><button class="cancel" data-id="remove-item">x</button><img src="{{image_url}}"></li><hr>
+                <li class="menu-item" data-id="{{id}}"><span data-id="name" contentEditable="true">{{name}}</span>, $<span data-id="price" contentEditable="true">{{price}}</span></p><p><span data-id="order_count" contentEditable="true">{{order_count}}</span> sold!</p><p>Profitability: X</p><button class="cancel" data-action="remove-item">x</button>
+                <div class="image"><img src="{{image_url}}"></div></li><hr>
                 {{/items}}
               </ol>
             </div>  
@@ -135,37 +154,16 @@
               </form>
             </div>
           </div><!-- end top row -->
-          <div data-id="other-items" class="row other-items">
+          <div data-id="other-items">
+            <span class="other-items">
+              <h5>Items from Other Restaurants</h5>
+              <p>Drag items onto the menu to copy them here!</p>
+            </span>
 
 
-
-            <div class="four columns other-item">
-              <div class="row">
-                <div class="seven columns"><h5>Item Name</h5><p>Restaurant Name</p></div>
-                <div class="five columns"><img src="http://blogs.plos.org/obesitypanacea/files/2014/10/sandwich.jpg"></div>
-              </div>
-            </div>
-
-            <div class="four columns other-item">
-              <div class="row">
-                <div class="seven columns"><h5>Item Name</h5><p>Restaurant Name</p></div>
-                <div class="five columns"><img src="http://blogs.plos.org/obesitypanacea/files/2014/10/sandwich.jpg"></div>
-              </div>
-            </div>
-
-            <div class="four columns other-item">
-              <div class="row">
-                <div class="seven columns"><h5>Item Name</h5><p>Restaurant Name</p></div>
-                <div class="five columns"><img src="http://blogs.plos.org/obesitypanacea/files/2014/10/sandwich.jpg"></div>
-              </div>
-            </div>
+            <div class="row other-items">
 
 
-            <div class="four columns other-item">
-              <div class="row">
-                <div class="seven columns"><h5>Item Name</h5><p>Restaurant Name</p></div>
-                <div class="five columns"><img src="http://blogs.plos.org/obesitypanacea/files/2014/10/sandwich.jpg"></div>
-              </div>
             </div>
 
 
@@ -176,6 +174,12 @@
       </script>
 
       <script type="text/template" data-id="other-item-card">
+        <div class="three columns other-item draggable" data-id="{{id}}">
+          <div class="row">
+            <div class="seven columns"><h5>{{name}}</h5></div>
+            <div class="five columns image"><img src="{{image_url}}"></div>
+          </div>
+        </div>
       </script>
 
       <!-- End of templates -->

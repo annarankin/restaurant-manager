@@ -27,13 +27,6 @@
       "cuisine": "Frozen Bananas",
       "image_url": "http://bestuff.com/images/images_of_stuff/210x600/theres-always-money-in-the-banana-stand-131159.jpg?1207257750",
       "id": 8
-    },
-    {
-      "name": "Eggs'R Us",
-      "location": "Egglandia",
-      "cuisine": "Eggs",
-      "image_url": "http://thesis2010.micadesign.org/kropp/images/research/bird_egg.png",
-      "id": 9
     }
   ],
   "items": [
@@ -108,36 +101,20 @@
       "id": 45
     },
     {
-      "restaurantId": 9,
-      "name": "Omelette",
-      "price": 8,
+      "restaurantId": 7,
+      "name": "Yakisoba",
+      "price": 23,
       "order_count": 0,
-      "image_url": "http://ichef.bbci.co.uk/food/ic/food_16x9_608/recipes/cheeseomelette_80621_16x9.jpg",
-      "id": 48
+      "image_url": "http://cdn2.norecipes.com/wp-content/uploads/2013/07/yakisoba-7.jpg?ff95e6",
+      "id": 52
     },
     {
-      "restaurantId": 9,
-      "name": "Eggs Benedict",
-      "price": 14,
-      "order_count": 0,
-      "image_url": "http://i2.cdn.turner.com/cnn/dam/assets/120413044959-eggs-benedict-story-top.jpg",
-      "id": 49
-    },
-    {
-      "restaurantId": 9,
-      "name": "All Sorts of Eggs",
-      "price": 5,
-      "order_count": 0,
-      "image_url": "https://s-media-cache-ak0.pinimg.com/736x/5a/05/3a/5a053a80db986319a7ea5ace0e678c8e.jpg",
-      "id": 50
-    },
-    {
-      "restaurantId": 9,
-      "name": "Egg",
+      "restaurantId": 8,
+      "name": "Banana Cookie",
       "price": 2,
       "order_count": 0,
-      "image_url": "http://thesis2010.micadesign.org/kropp/images/research/bird_egg.png",
-      "id": 51
+      "image_url": "http://www.pbfingers.com/wp-content/uploads/2012/05/oatmeal-banana-peanut-butter-cookies-034-001.jpg",
+      "id": 53
     }
   ],
   "images": [],

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Restaurant Manager</title>
+  <title>Mister Manager</title>
   <link rel="icon" type="image/png" href="./favicon.ico?">
 
   <!-- Script links -->
@@ -12,11 +12,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/draggabilly/1.2.3/draggabilly.pkgd.js"></script>
   <script src="./scripts/droppabilly.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js"></script>
 
   <!-- Stylesheet links -->
   <link href='http://fonts.googleapis.com/css?family=Fontdiner+Swanky' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"> 
   <link rel="stylesheet" href="animate.css">
   <link rel="stylesheet" href="style.css">
 
@@ -24,7 +26,7 @@
 
 <body>
 
-  <header><h1>Restaurant Manager</h1></header>
+  <header><h1>Mister Manager</h1></header>
   <div id="add-bar"> </div>
   <div class="container content">
     <div class="row">
@@ -33,6 +35,7 @@
     </div>
   </div>
   <footer>
+    <a href="#/stats">??? PROFIT</a>
     <a href="#/about">About the Developer</a>
   </footer> 
 
@@ -41,6 +44,20 @@
 
 
   <!-- TEMPLATES -->
+
+
+  <script type="text/template" data-id="stats-template">
+    <div class="dimmer" onclick=location.href="#/"></div>
+    <div class="stats animated bounceIn">
+      <h1>Statistics and Stuff</h1>
+      <h2>Profitable Foods</h2>
+      <canvas id="profit-chart"></canvas>
+      <a href="#/">Close</a>
+    </div>
+  </script>
+
+
+
 
   <script type="text/template" data-id="about-template">
     <div class="dimmer" onclick=location.href="#/"></div>
@@ -134,58 +151,69 @@
               <h4>Menu</h4>
               <ol>
                 {{#items}}
-                <li class="menu-item" data-id="{{id}}"><span data-id="name" contentEditable="true">{{name}}</span>, $<span data-id="price" contentEditable="true">{{price}}</span></p><p><span data-id="order_count" contentEditable="true">{{order_count}}</span> sold!</p><p>Profitability: X</p><button class="cancel" data-action="remove-item">x</button>
-                <div class="image"><img src="{{image_url}}"></div></li><hr>
-                {{/items}}
-              </ol>
-            </div>  
-            <div class="five columns">
-              <form>
-                <div class="row">
-                  <div class="twelve columns">  
-                    <h4>Add new item</h4>
-                    <input class="u-full-width" type="text" placeholder="Item Name" name="name">
-                    <input class="u-full-width" type="number" placeholder="Price" name="price">
-                    <input class="u-full-width" type="text" placeholder="Image URL" name="image_url">
-                    <input class="button-primary u-full-width" type="submit" data-action="new-item" value="Submit">
+                <li class="menu-item" data-id="{{id}}"><span data-id="name" contentEditable="true">{{name}}</span>, $<span data-id="price" contentEditable="true">{{price}}</span></p><p>Order count: <span data-id="order_count" contentEditable="true">{{order_count}}</span></p><p>Total Profits: $<span data-id="profit">{{profit}}</span>!</p><button class="cancel" data-action="remove-item">x</button>
+                  <div class="image"><img src="{{image_url}}"></div></li><hr>
+                  {{/items}}
+                  {{^items}}
+                  <h5>No items here yet!</h5>
+                  <p>Add a new menu item using the form on the right, or drag an item from the list below!</p>
+                  {{/items}}
 
-                  </div>
+                </ol>
+              </div>  
+              <div class="five columns">
+                <form>
+                  <div class="row">
+                    <div class="twelve columns">  
+                      <h4>Add new item</h4>
+                      <input class="u-full-width" type="text" placeholder="Item Name" name="name">
+
+                      <div class="row">
+                        <div class="dollar"><i class="fa fa-usd fa-2x"></i></div>
+                        <div class="price"><input class="u-full-width" type="number" name="price" placeholder="Price"></div>
+                      </div>
+                      <input class="u-full-width" type="text" placeholder="Image URL" name="image_url">
+                      <input class="button-primary u-full-width" type="submit" data-action="new-item" value="Submit">
+                      <p>Need to upload an image? Try <a href="http://imgur.com" target="_blank">imgur</a>
+
+
+                      </div>
+                    </div>
+                  </form>
                 </div>
-              </form>
+              </div><!-- end top row -->
+              <div data-id="other-items">
+                <span class="other-items">
+                  <h5>Items from Other Restaurants</h5>
+                  <p>Drag items onto the menu to copy them here!</p>
+                </span>
+
+
+                <div class="row other-items">
+
+
+                </div>
+
+
+              </div>
+
             </div>
-          </div><!-- end top row -->
-          <div data-id="other-items">
-            <span class="other-items">
-              <h5>Items from Other Restaurants</h5>
-              <p>Drag items onto the menu to copy them here!</p>
-            </span>
 
+          </script>
 
-            <div class="row other-items">
-
-
+          <script type="text/template" data-id="other-item-card">
+            <div class="three columns other-item draggable" data-id="{{id}}">
+              <div class="row">
+                <div class="seven columns"><h5>{{name}}</h5></div>
+                <div class="five columns image"><img src="{{image_url}}"></div>
+              </div>
             </div>
+          </script>
 
+          <!-- End of templates -->
 
-          </div>
-
-        </div>
-
-      </script>
-
-      <script type="text/template" data-id="other-item-card">
-        <div class="three columns other-item draggable" data-id="{{id}}">
-          <div class="row">
-            <div class="seven columns"><h5>{{name}}</h5></div>
-            <div class="five columns image"><img src="{{image_url}}"></div>
-          </div>
-        </div>
-      </script>
-
-      <!-- End of templates -->
-
-      <!-- Loading router & main -->
-      <script src="./scripts/main.js"></script>
-      <script src="./scripts/router.js"></script>  
-    </body>
-    </html>
+          <!-- Loading router & main -->
+          <script src="./scripts/main.js"></script>
+          <script src="./scripts/router.js"></script>  
+        </body>
+        </html>

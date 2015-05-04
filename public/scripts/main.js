@@ -7,6 +7,7 @@ var menuTemplate = $('[data-id ="menu-template"]').text()
 var otherItemCard = $('[data-id="other-item-card"]').text()
 var deleteButton = '<input class="button cancel" data-action="delete-restaurant" type="submit" value="Delete Restaurant">'
 var aboutTemplate = $('[data-id ="about-template"]').text()
+var statsTemplate = $('[data-id ="stats-template"]').text()
 
 
 //setting up variables that remain constant
@@ -23,10 +24,11 @@ $content.on('click', 'button[data-action="expand-restaurant-info"]', expandResta
 $content.on('click', 'input[data-action="update-restaurant"]', updateRestaurant)
 $content.on('click', 'input[data-action="delete-restaurant"]', deleteRestaurant)
 $content.on('click', '[data-action="expand-restaurant-menu"]', viewMenu)
+  // $content.on('click', '[data-action="collapse-restaurant-menu"]', collapseMenu)
 $content.on('click', '[data-action="new-item"]', submitNewItem)
 $content.on('click', '[data-action="remove-item"]', removeItem)
 
-$content.on('blur', '[contentEditable="true"]', updateItem)
+$content.on('input', '[contentEditable="true"]', updateItem)
 
 
 
@@ -34,6 +36,7 @@ $content.on('blur', '[contentEditable="true"]', updateItem)
 
 function home(event) {
   hideAbout();
+  hideStats();
   collapseAddNewMenu();
   getFromServer('/restaurants', renderRestaurant)
 }
@@ -208,20 +211,30 @@ function viewMenu(event) {
     // 
     $(el).find('.info').html("")
   })
-  expandMenu(restaurantId)
+  expandMenu(restaurantId, event)
 }
 
 
-function expandMenu(restaurantId) {
+function expandMenu(restaurantId, event) {
 
   console.log('restaurant ID: ' + restaurantId)
-
+  var $viewBtn = $('button[data-id="'+restaurantId+'"]')
+  $viewBtn.attr('data-action', 'collapse-restaurant-menu')
+  $viewBtn.text("Close Menu");
+  $viewBtn.on('click', function() {
+    collapseMenu(restaurantId)
+  })
   getFromServer('/restaurants/' + restaurantId + '/items', function(restaurantItemData) {
     getFromServer('/items', function(allItemData) {
       var $infoSection = $('.twelve.columns.restaurant[data-id ="' + restaurantId + '"]').find('.info');
       console.log("got data, about to empty info section")
-      
+
       $infoSection.html("")
+
+      //calculate profits
+      _.each(restaurantItemData, function(el) {
+        el.profit = parseInt(el.price) * parseInt(el.order_count)
+      })
 
       //append current items to restaurant menu
       $infoSection.append(Mustache.render(menuTemplate, {
@@ -230,32 +243,8 @@ function expandMenu(restaurantId) {
       }))
 
       renderOtherItems(restaurantId, restaurantItemData, allItemData)
-        // //gets the names of all foods currently on the restaurant's menu
-        // var currentItemNames = _.pluck(restaurantItemData, 'name')
-        //   // 
-
-      // //rejects any items that already belong to this restaurant
-      // var notThisRestaurantArray = _.reject(allItemData, function(el) {
-      //   //used soft equality so as to avoid parsing/stringifying. Also checked for duplicate names
-      //   return (el.restaurantId == restaurantId || _.contains(currentItemNames, el.name));
-      // })
-
-      // //kill duplicate food items
-      // var noDupes = _.uniq(notThisRestaurantArray, false, function(el) {
-      //     return el.name
-      //   })
-      //   //renders each element with moostache, makes it draggable
-      // var otherItemArray = _.map(noDupes, function(el) {
-      //   var $newItemCard = $(Mustache.render(otherItemCard, el))
-      //   return $newItemCard
-      // })
-
-      // //append ALL THE THINGS
-      // $otherItemRow.append(otherItemArray)
-
-      // //make 'em draggerbull
-      // var $draggable = $('.draggable').draggabilly()
-      //make 'em dropperbull
+        // updateProfits(event)
+        //make menu field droppable
       var dropster = new Droppabilly(document.getElementById('droppable'), {
         dragstersClassName: 'draggable',
         over: function(drop, drag) { //do nothing
@@ -266,6 +255,11 @@ function expandMenu(restaurantId) {
       });
     });
   });
+}
+
+function collapseMenu(restaurantId) {
+  //empties the div of the restaurant that matches ID
+  $('.restaurant[data-id="' + restaurantId + '"]').find('.info').html("")
 }
 
 function renderOtherItems(restaurantId, restaurantItemData, allItemData) {
@@ -323,7 +317,7 @@ function submitNewItem(event) {
 function removeItem(event) {
   var restaurantId = $(this).parents('.items').attr('data-id');
   var itemId = $(this).parents('.menu-item').attr('data-id');
-  
+
   deleteFromServer('/items/' + itemId)
   expandMenu(restaurantId);
   // 
@@ -333,18 +327,33 @@ function updateItem(event) {
   var newValue = $(event.target).text()
   var itemId = $(event.target).parents('.menu-item').attr('data-id')
   var itemProperty = $(event.target).attr('data-id')
-    // 
-  var dataObject = JSON.parse('{"' + itemProperty + '" : "' + newValue + '"}')
+
+  if (itemProperty != 'name' && isNaN(newValue))
+
+    var dataObject = JSON.parse('{"' + itemProperty + '" : "' + newValue + '"}')
     // console.log(dataObject)
   updateServer('/items/' + itemId, dataObject)
+
+  //update profits
+  var itemPrice = parseInt($(event.target).parents('.menu-item').find('[data-id ="price"]').text())
+  var orderCount = parseInt($(event.target).parents('.menu-item').find('[data-id ="order_count"]').text())
+  var $profit = $(event.target).parents('.menu-item').find('[data-id ="profit"]')
+
+  if (isNaN(itemPrice * orderCount)) {
+    profit = 0;
+  } else {
+    profit = itemPrice * orderCount;
+  }
+  $profit.text(profit)
 }
+
 
 function dropThing(drop, drag) {
   //on drop, get item and restaurant info
   var itemId = $(drag).attr('data-id');
   var restaurantId = $(drop).attr('data-id')
   console.log(itemId + " and " + restaurantId)
-  //get data from server about item
+    //get data from server about item
   getFromServer('/items/' + itemId, function(data) {
     var dataObject = {
         restaurantId: restaurantId,
@@ -367,8 +376,56 @@ function showAbout() {
 }
 
 function hideAbout() {
-  $body.find('.about').remove()
+  $('.about').remove()
+  $('.dimmer').remove()
+}
+
+function showStats() {
+  $body.append($(statsTemplate))
+  makeChart();
+}
+
+function hideStats() {
+  $('.stats').remove()
   $body.find('.dimmer').remove()
+}
+
+function makeChart() {
+  //get context of chart using jQuerrrz because I like jQuerz
+  var context = $('#profit-chart').get(0).getContext("2d");
+  //make ajax call, get data
+  getFromServer('/items', function(data) {
+    var sortedData = _.sortBy(data, function(el) {
+      return -(el.price * el.order_count)
+    }).splice(0, 10)
+    var itemLabels = _.pluck(sortedData, 'name')
+    var profitCalc = _.each(sortedData, function(el) {
+      el.profit = el.price * el.order_count
+    })
+    var itemProfits = _.pluck(profitCalc, 'profit')
+
+    // var _.each([1, 2, 3], alert)
+    // debugger
+
+    //create chart data object
+    var dataTest = {
+      labels: itemLabels,
+      datasets: [{
+        data: itemProfits,
+        fillColor: "#ee4433",
+      }]
+    }
+
+    //set up yo options for that chart
+    options = {
+        scaleLabel: function(valuePayload) {
+          return '  $' + Number(valuePayload.value);
+        },
+      }
+      //make new Chart (.Bar)
+    var profitChart = new Chart(context).Bar(dataTest, options)
+  })
+
 }
 
 

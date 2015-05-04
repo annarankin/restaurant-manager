@@ -17,7 +17,8 @@ var routes = {
       }
     }
   },
-  '/about' : showAbout
+  '/about' : showAbout,
+  '/stats' : showStats
 }
 
 //ROUTES TAKE 2

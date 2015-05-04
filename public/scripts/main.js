@@ -354,7 +354,9 @@ function updateItem(event) {
   var itemId = $(event.target).parents('.menu-item').attr('data-id')
   var itemProperty = $(event.target).attr('data-id')
 
-  if (itemProperty != 'name' && isNaN(newValue))
+  if (itemProperty != 'name' && isNaN(parseInt(newValue))) {
+    newValue = 0;
+  }
 
     var dataObject = JSON.parse('{"' + itemProperty + '" : "' + newValue + '"}')
     // console.log(dataObject)

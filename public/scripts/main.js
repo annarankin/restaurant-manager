@@ -141,7 +141,8 @@ function deleteFromServer(url) {
 
 
 
-//rendering functions
+// ------------------ rendering functions ------------------ 
+
 function renderRestaurant(data) {
   $content.html("")
   var sortedData = _.sortBy(data, function(obj) {
@@ -198,6 +199,10 @@ function expandRestaurantInfo(event) {
   $infoSection.find('.container').append(deleteButton)
     // 
 }
+
+
+
+// ------------------ MENU CREATION ------------------ 
 
 
 function viewMenu(event) {
@@ -278,15 +283,6 @@ function expandMenu(restaurantId, event) {
   });
 }
 
-function collapseMenu(restaurantId) {
-
-  var $viewBtn = $('button[data-id="' + restaurantId + '"]')
-  $viewBtn.attr('data-action', 'expand-restaurant-menu')
-  $viewBtn.text("View Menu");
-
-  //empties the div of the restaurant that matches ID
-  $('.restaurant[data-id="' + restaurantId + '"]').find('.info').html("")
-}
 
 function renderOtherItems(restaurantId, restaurantItemData, allItemData) {
 
@@ -398,6 +394,15 @@ function dropThing(drop, drag) {
     })
   })
 }
+function collapseMenu(restaurantId) {
+
+  var $viewBtn = $('button[data-id="' + restaurantId + '"]')
+  $viewBtn.attr('data-action', 'expand-restaurant-menu')
+  $viewBtn.text("View Menu");
+
+  //empties the div of the restaurant that matches ID
+  $('.restaurant[data-id="' + restaurantId + '"]').find('.info').html("")
+}
 
 function showAbout() {
   $body.append($(aboutTemplate))
@@ -407,6 +412,10 @@ function hideAbout() {
   $('.about').remove()
   $('.dimmer').remove()
 }
+
+
+
+// ------------------ STATISTICS CHART ------------------ 
 
 function showStats() {
   $body.append($(statsTemplate))
